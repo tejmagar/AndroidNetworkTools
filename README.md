@@ -1,5 +1,21 @@
 # Android Network Tools
 
+## Update settings.gradle(Project Settings)
+
+```
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+## Sample code
+
 ```
 NetworkScanner.init(this);
 
