@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, connectedDevices);
         scannedDevices.setAdapter(arrayAdapter);
 
-        // Pass wifiManager to initialize network scanner
+        // Pass context to initialize network scanner
         NetworkScanner.init(this);
         NetworkScanner.setShowVendorInfo(true);
 
