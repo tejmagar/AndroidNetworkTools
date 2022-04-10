@@ -47,4 +47,4 @@ NetworkScanner.setShowVendorInfo(false);
 ## 
 
 ## Use Target SDK 29 or below for MAC Address
-<p>See: [](https://developer.android.com/about/versions/11/privacy/mac-address)</p>
+<p>See: https://developer.android.com/about/versions/11/privacy/mac-address
