@@ -3,7 +3,6 @@
 ## Update settings.gradle(Project Settings)
 
 ```
-...
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -13,14 +12,11 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
-...
 ```
 
 ## Update build.gradle(Module: project.app)
 ```
-...
 implementation 'com.github.tejmagar:AndroidNetworkTools:1.0.0alpha'
-...
 ```
 
 ## Sample code
