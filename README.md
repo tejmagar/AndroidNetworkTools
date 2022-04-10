@@ -1,6 +1,6 @@
 # Android Network Tools
 
-`
+```
 NetworkScanner.init(this);
 
 NetworkScanner.scan(new OnNetworkScanListener() {
@@ -16,5 +16,4 @@ NetworkScanner.scan(new OnNetworkScanListener() {
 
     }
 );
-
-`
+```
