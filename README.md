@@ -1,6 +1,6 @@
 # Android Network Tools
 
-<img src="screenshot.jpg" alt="Android Network Tools by Tej Magar" width="400"/>
+<img src="screenshot.jpg" alt="Android Network Tools by Tej Magar" width="200"/>
 
 ## Update settings.gradle(Project Settings)
 
