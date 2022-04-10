@@ -41,7 +41,8 @@ NetworkScanner.scan(new OnNetworkScanListener() {
 
 ## Optional
 
-<p>After Network scanner is initialized, you can disable MAC Address and Vendor names processing by.
+<p>After Network scanner is initialized, you can disable MAC Address and Vendor names processing
+as shown below.
 Note: MAC Address is required to lookup vendor name.</p>
 
 ```
