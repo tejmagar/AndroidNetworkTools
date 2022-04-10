@@ -33,3 +33,18 @@ NetworkScanner.scan(new OnNetworkScanListener() {
     }
 );
 ```
+
+## Optional
+
+<p>After Network scanner is initialized, you can disable MAC Address and Vendor names processing by.
+Note: MAC Address is required to lookup vendor name.</p>
+
+```
+NetworkScanner.setShowMacAddress(false);
+NetworkScanner.setShowVendorInfo(false);
+```
+
+## 
+
+## Use Target SDK 29 or below for MAC Address
+<p>See: [](https://developer.android.com/about/versions/11/privacy/mac-address)</p>
