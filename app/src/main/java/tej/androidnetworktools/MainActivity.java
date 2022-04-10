@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Pass context to initialize network scanner
         NetworkScanner.init(this);
-        NetworkScanner.setShowVendorInfo(true);
 
         scan();
     }
