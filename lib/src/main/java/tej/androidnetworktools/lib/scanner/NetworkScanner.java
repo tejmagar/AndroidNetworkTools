@@ -1,10 +1,11 @@
 package tej.androidnetworktools.lib.scanner;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,11 +41,15 @@ public class NetworkScanner {
     private final HashMap<String, Device> ipAndDeviceHashMap = new HashMap<>();
     private JSONArray vendorsJson;
 
+    private final ConnectivityManager connectivityManager;
+
     private NetworkScanner(Context context) {
         handler = new Handler(Looper.getMainLooper());
 
         initIPConfigs(context);
         initVendorsJson(context);
+
+        connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
     private void initIPConfigs(Context context) {
@@ -93,8 +98,13 @@ public class NetworkScanner {
         this.scanTimeout = scanTimeout;
     }
 
+    public boolean isWiFiConnected() {
+        NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return wifiInfo.isConnected();
+    }
+
     public void scanNetwork(OnNetworkScanListener onNetworkScanListener) {
-        if (taskRunning) {
+        if (taskRunning || !isWiFiConnected()) {
             onNetworkScanListener.onFailed();
             return;
         }
