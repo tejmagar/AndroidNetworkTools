@@ -123,6 +123,9 @@ public class DeviceInfo {
     }
 
     public static String getVendorName(String macAddress) {
+        if (macAddress == null) {
+            return UNKNOWN;
+        }
 
         try {
             JSONArray jsonArray = NetworkScanner.getVendorsJsonArray();
