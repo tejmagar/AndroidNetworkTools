@@ -4,7 +4,6 @@
     <img src="screenshot.jpg" alt="Android Network Tools by Tej Magar" width="220"/>
 </p>
 
-
 ## Update settings.gradle(Project Settings)
 
 ```
@@ -20,6 +19,7 @@ dependencyResolutionManagement {
 ```
 
 ## Update build.gradle(Module: project.app)
+
 ```
 implementation 'com.github.tejmagar:AndroidNetworkTools:1.0.0alpha'
 ```
@@ -55,7 +55,28 @@ NetworkScanner.setShowMacAddress(false);
 NetworkScanner.setShowVendorInfo(false);
 ```
 
-## 
+## Traceroute
+
+```
+ Traceroute.init(this);
+ Traceroute.start("google.com", new OnTracerouteListener() {
+       @Override
+       public void onRouteAdd(String route) {
+            Log.d(TAG, "traceroute: " + route);
+       }
+
+       @Override
+       public void onComplete(List<String> routes) {
+            Log.d(TAG, "traceroute: " + "completed total: " + routes.size());
+       }
+
+        @Override
+        public void onFailed() {
+            Log.d(TAG, "traceroute failed");
+        }
+    });
+```
 
 ## Use Target SDK 29 or below for MAC Address
+
 <p>See: https://developer.android.com/about/versions/11/privacy/mac-address
