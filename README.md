@@ -21,7 +21,7 @@ dependencyResolutionManagement {
 ## Update build.gradle(Module: project.app)
 
 ```
-implementation 'com.github.tejmagar:AndroidNetworkTools:1.0.0alpha'
+implementation 'com.github.tejmagar:AndroidNetworkTools:1.0.1alpha'
 ```
 
 ## Sample code
