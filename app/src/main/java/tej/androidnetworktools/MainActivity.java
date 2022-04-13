@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -12,15 +13,21 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import tej.androidnetworktools.lib.Device;
 import tej.androidnetworktools.lib.scanner.NetworkScanner;
 import tej.androidnetworktools.lib.scanner.OnNetworkScanListener;
+import tej.androidnetworktools.lib.scanner.OnTracerouteListener;
+import tej.androidnetworktools.lib.scanner.Traceroute;
 
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<String> connectedDevices = new ArrayList<>();
     private ArrayAdapter<String> arrayAdapter;
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +41,25 @@ public class MainActivity extends AppCompatActivity {
 
         // Pass context to initialize network scanner
         NetworkScanner.init(this);
-
         scan();
+
+        Traceroute.init(this);
+        Traceroute.start("google.com", new OnTracerouteListener() {
+            @Override
+            public void onRouteAdd(String route) {
+                Log.d(TAG, "traceroute: " + route);
+            }
+
+            @Override
+            public void onComplete(List<String> routes) {
+                Log.d(TAG, "traceroute: " + "completed total: " + routes.size());
+            }
+
+            @Override
+            public void onFailed() {
+                Log.d(TAG, "traceroute failed");
+            }
+        });
     }
 
     private void scan() {

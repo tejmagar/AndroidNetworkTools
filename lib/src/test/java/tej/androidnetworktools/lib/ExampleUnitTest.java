@@ -4,7 +4,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import android.util.Log;
+
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import tej.androidnetworktools.lib.scanner.NetworkScanner;
 import tej.androidnetworktools.lib.scanner.OnNetworkScanListener;
@@ -21,7 +25,8 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void testIPAddressPrefix() {
+    public void test() {
+
 
     }
 }

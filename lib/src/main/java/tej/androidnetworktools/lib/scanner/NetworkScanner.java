@@ -2,7 +2,6 @@ package tej.androidnetworktools.lib.scanner;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,6 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import tej.androidnetworktools.lib.Device;
+import tej.androidnetworktools.lib.NetworkConnection;
 import tej.androidnetworktools.lib.parsers.DeviceInfo;
 import tej.androidnetworktools.lib.Ping;
 import tej.androidnetworktools.lib.parsers.Utils;
@@ -98,13 +98,8 @@ public class NetworkScanner {
         this.scanTimeout = scanTimeout;
     }
 
-    public boolean isWiFiConnected() {
-        NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        return wifiInfo.isConnected();
-    }
-
     public void scanNetwork(OnNetworkScanListener onNetworkScanListener) {
-        if (taskRunning || !isWiFiConnected()) {
+        if (taskRunning || !NetworkConnection.isWifiConnected(connectivityManager)) {
             onNetworkScanListener.onFailed();
             return;
         }
