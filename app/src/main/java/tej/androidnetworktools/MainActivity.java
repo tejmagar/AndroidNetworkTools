@@ -17,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import tej.androidnetworktools.lib.Device;
+import tej.androidnetworktools.lib.Route;
 import tej.androidnetworktools.lib.scanner.NetworkScanner;
 import tej.androidnetworktools.lib.scanner.OnNetworkScanListener;
 import tej.androidnetworktools.lib.scanner.OnTracerouteListener;
@@ -46,12 +47,13 @@ public class MainActivity extends AppCompatActivity {
         Traceroute.init(this);
         Traceroute.start("google.com", new OnTracerouteListener() {
             @Override
-            public void onRouteAdd(String route) {
-                Log.d(TAG, "traceroute: " + route);
+            public void onRouteAdd(Route route) {
+                Log.d(TAG, "traceroute: IP Address =>" + route.ipAddress + "=>"
+                        + "RAW: " + route.rawAddress);
             }
 
             @Override
-            public void onComplete(List<String> routes) {
+            public void onComplete(List<Route> routes) {
                 Log.d(TAG, "traceroute: " + "completed total: " + routes.size());
             }
 

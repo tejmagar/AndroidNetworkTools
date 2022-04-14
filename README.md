@@ -60,21 +60,22 @@ NetworkScanner.setShowVendorInfo(false);
 ```
  Traceroute.init(this);
  Traceroute.start("google.com", new OnTracerouteListener() {
-       @Override
-       public void onRouteAdd(String route) {
-            Log.d(TAG, "traceroute: " + route);
-       }
+    @Override
+    public void onRouteAdd(Route route) {
+        Log.d(TAG, "traceroute: IP Address =>" + route.ipAddress + "=>"
+               + "RAW: " + route.rawAddress);
+    }
 
-       @Override
-       public void onComplete(List<String> routes) {
-            Log.d(TAG, "traceroute: " + "completed total: " + routes.size());
-       }
+    @Override
+    public void onComplete(List<Route> routes) {
+        Log.d(TAG, "traceroute: " + "completed total: " + routes.size());
+    }
 
-        @Override
-        public void onFailed() {
-            Log.d(TAG, "traceroute failed");
-        }
-    });
+    @Override
+    public void onFailed() {
+        Log.d(TAG, "traceroute failed");
+    }
+ });
 ```
 
 ## Use Target SDK 29 or below for MAC Address

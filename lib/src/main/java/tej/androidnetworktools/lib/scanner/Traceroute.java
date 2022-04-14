@@ -20,6 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import tej.androidnetworktools.lib.NetworkConnection;
+import tej.androidnetworktools.lib.Route;
 
 public class Traceroute {
     private static Traceroute instance;
@@ -27,19 +28,21 @@ public class Traceroute {
     private int ttl = 64;
     private boolean isRunning = false;
 
-    private final Pattern routeMatcher;
+    private final Pattern routePattern;
+    private final Pattern ipAddressPattern;
 
     private final Handler handler;
     private String lastRoute;
 
-    private List<String> routes = new ArrayList<>();
+    private final List<Route> routes = new ArrayList<>();
 
     private Traceroute(Context context) {
         connectivityManager = (ConnectivityManager) context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
 
         handler = new Handler(Looper.getMainLooper());
-        routeMatcher = Pattern.compile("(From|from)(.*?):");
+        routePattern = Pattern.compile("(From|from)(.*?):");
+        ipAddressPattern = Pattern.compile("[(](.*?)[)]");
     }
 
     public static void init(Context context) {
@@ -48,11 +51,24 @@ public class Traceroute {
         }
     }
 
-    private String parseRoute(String response) {
-        Matcher matcher = routeMatcher.matcher(response);
+    private Route parseRoute(String response) {
+        Matcher routeMatcher = routePattern.matcher(response);
 
-        if (matcher.find()) {
-            return matcher.group(2);
+        if (routeMatcher.find()) {
+            Route route = new Route();
+            route.rawAddress = routeMatcher.group(2);
+
+            if (route.rawAddress != null) {
+                Matcher ipAddressMatcher = ipAddressPattern.matcher(route.rawAddress);
+
+                if (ipAddressMatcher.find()) {
+                    route.ipAddress = ipAddressMatcher.group(1);
+                } else {
+                    route.ipAddress = route.rawAddress;
+                }
+            }
+
+            return route;
         }
 
         return null;
@@ -81,19 +97,19 @@ public class Traceroute {
                     result = future.get();
 
                     if (result != null) {
-                        String route = parseRoute(result);
+                        Route route = parseRoute(result);
 
                         if (route != null) {
-                            if (route.equals(lastRoute)) {
+                            if (route.rawAddress.equals(lastRoute)) {
                                 onTracerouteListener.onComplete(routes);
                                 return;
                             }
 
                             routes.add(route);
                             handler.post(() -> onTracerouteListener.onRouteAdd(route));
-                        }
 
-                        lastRoute = route;
+                            lastRoute = route.rawAddress;
+                        }
                     }
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
