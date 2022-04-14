@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -18,6 +20,7 @@ import java.util.regex.Pattern;
 
 import tej.androidnetworktools.lib.Device;
 import tej.androidnetworktools.lib.Route;
+import tej.androidnetworktools.lib.parsers.DeviceInfo;
 import tej.androidnetworktools.lib.scanner.NetworkScanner;
 import tej.androidnetworktools.lib.scanner.OnNetworkScanListener;
 import tej.androidnetworktools.lib.scanner.OnTracerouteListener;
@@ -62,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "traceroute failed");
             }
         });
+
+        JSONObject vendorInfo = DeviceInfo.getVendorInfo(this, "24:11:45:c2:ba:3f");
+        Log.e("info", vendorInfo.toString());
     }
 
     private void scan() {

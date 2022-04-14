@@ -1,6 +1,9 @@
 package tej.androidnetworktools.lib.parsers;
 
 
+import android.content.Context;
+import android.os.Build;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,6 +86,11 @@ public class DeviceInfo {
 
             if (device != null) {
                 device.macAddress = getCurrentDeviceMacAddress(currentIPAddress);
+
+                if (device.hostname.equals(device.ipAddress)) {
+                    device.hostname = Build.MODEL;
+                    device.vendorName = Build.MANUFACTURER;
+                }
             }
 
         } catch (IOException | InterruptedException e) {
@@ -122,29 +130,48 @@ public class DeviceInfo {
         return UNKNOWN;
     }
 
-    public static String getVendorName(String macAddress) {
-        if (macAddress == null) {
-            return UNKNOWN;
-        }
-
+    private static JSONObject vendorLookup(String macAddress) {
         try {
             JSONArray jsonArray = NetworkScanner.getVendorsJsonArray();
 
-            String macAddressPrefix, vendorName;
+            String macAddressPrefix;
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 macAddressPrefix = jsonObject.getString("m");
-                vendorName = jsonObject.getString("n");
 
                 if (macAddress.toLowerCase().startsWith(macAddressPrefix.toLowerCase())) {
-                    return vendorName;
+                    return jsonObject;
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public static String getVendorName(String macAddress) {
+        if (macAddress == null) {
+            return UNKNOWN;
+        }
+
+        JSONObject jsonObject = vendorLookup(macAddress);
+        if (jsonObject != null) {
+            try {
+                return jsonObject.getString("n");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         return UNKNOWN;
+    }
+
+    public static JSONObject getVendorInfo(Context context, String macAddress) {
+        if (NetworkScanner.getInstance() == null) {
+            NetworkScanner.init(context);
+        }
+
+        return vendorLookup(macAddress);
     }
 }
