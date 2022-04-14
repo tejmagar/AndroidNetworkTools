@@ -42,6 +42,13 @@ public class DeviceInfo {
                 }
             }
         }
+
+        Device currentDevice = ipAndDeviceHashMap.get(NetworkScanner.getCurrentIPAddress());
+
+        if (currentDevice != null) {
+            currentDevice.hostname = Build.MODEL;
+            currentDevice.vendorName = Build.MANUFACTURER;
+        }
     }
 
     public static void setMacAddress(HashMap<String, Device> ipAndDeviceHashMap) {
@@ -86,11 +93,6 @@ public class DeviceInfo {
 
             if (device != null) {
                 device.macAddress = getCurrentDeviceMacAddress(currentIPAddress);
-
-                if (device.hostname.equals(device.ipAddress)) {
-                    device.hostname = Build.MODEL;
-                    device.vendorName = Build.MANUFACTURER;
-                }
             }
 
         } catch (IOException | InterruptedException e) {
