@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         JSONObject vendorInfo = DeviceInfo.getVendorInfo(this, "24:11:45:c2:ba:3f");
-        Log.e("info", vendorInfo.toString());
+        Log.d("info", vendorInfo.toString());
     }
 
     private void scan() {
