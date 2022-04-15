@@ -109,6 +109,7 @@ public class Traceroute {
 
                         if (route != null) {
                             if (route.rawAddress.equals(lastRoute)) {
+                                isRunning = false;
                                 onTracerouteListener.onComplete(routes);
                                 return;
                             }

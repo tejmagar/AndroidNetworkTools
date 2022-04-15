@@ -44,11 +44,22 @@ public class MainActivity extends AppCompatActivity {
         scannedDevices.setAdapter(arrayAdapter);
 
         // Pass context to initialize network scanner
-        NetworkScanner.init(this);
-        scan();
+//        NetworkScanner.init(this);
+//        scan();
 
         Traceroute.init(this);
-        Traceroute.start("google.com", new OnTracerouteListener() {
+        traceroute("google");
+//
+//        JSONObject vendorInfo = DeviceInfo.getVendorInfo(this, "24:11:45:c2:ba:3f");
+//        Log.d("info", vendorInfo.toString());
+    }
+
+    int i=0;
+
+    private void traceroute(String target) {
+        i++;
+
+        Traceroute.start(target, new OnTracerouteListener() {
             @Override
             public void onRouteAdd(Route route) {
                 Log.d(TAG, "traceroute: IP Address =>" + route.ipAddress + "=>"
@@ -65,9 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "traceroute failed");
             }
         });
-
-        JSONObject vendorInfo = DeviceInfo.getVendorInfo(this, "24:11:45:c2:ba:3f");
-        Log.d("info", vendorInfo.toString());
     }
 
     private void scan() {
@@ -114,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.refresh) {
-            scan();
+//            scan();
+            traceroute("google.com");
         }
 
         return super.onOptionsItemSelected(item);
