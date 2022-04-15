@@ -110,7 +110,7 @@ public class Traceroute {
                         if (route != null) {
                             if (route.rawAddress.equals(lastRoute)) {
                                 isRunning = false;
-                                onTracerouteListener.onComplete(routes);
+                                handler.post(() -> onTracerouteListener.onComplete(routes));
                                 return;
                             }
 
