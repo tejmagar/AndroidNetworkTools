@@ -28,6 +28,8 @@ public class Traceroute {
     private int ttl = 64;
     private boolean isRunning = false;
 
+    private static final String UNKNOWN_HOST_PREFIX = "ping: unknown host";
+
     private final Pattern routePattern;
     private final Pattern ipAddressPattern;
 
@@ -97,6 +99,11 @@ public class Traceroute {
                     result = future.get();
 
                     if (result != null) {
+                        if (result.equals(UNKNOWN_HOST_PREFIX)) {
+                            onTracerouteListener.onFailed();
+                            return;
+                        }
+
                         Route route = parseRoute(result);
 
                         if (route != null) {
@@ -147,13 +154,26 @@ public class Traceroute {
 
             process.waitFor();
 
-            InputStream inputStream = process.getInputStream();
+            int exitCode = process.exitValue();
+
+            InputStream inputStream;
+
+            if (exitCode == 2) {
+                inputStream = process.getErrorStream();
+            } else {
+                inputStream = process.getInputStream();
+            }
+
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
             String line;
 
             while ((line = bufferedReader.readLine()) != null) {
+                if (line.startsWith(UNKNOWN_HOST_PREFIX)) {
+                    return UNKNOWN_HOST_PREFIX;
+                }
+
                 if (line.contains("From") || line.contains("from")) {
                     return line;
                 }

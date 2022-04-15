@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Pass context to initialize network scanner
         NetworkScanner.init(this);
-        scan();
+//        scan();
 
         Traceroute.init(this);
-        Traceroute.start("google.com", new OnTracerouteListener() {
+        Traceroute.start("goog", new OnTracerouteListener() {
             @Override
             public void onRouteAdd(Route route) {
                 Log.d(TAG, "traceroute: IP Address =>" + route.ipAddress + "=>"
