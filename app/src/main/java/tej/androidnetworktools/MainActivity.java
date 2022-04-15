@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Pass context to initialize network scanner
         NetworkScanner.init(this);
-//        scan();
+        scan();
 
         Traceroute.init(this);
         Traceroute.start("goog", new OnTracerouteListener() {
