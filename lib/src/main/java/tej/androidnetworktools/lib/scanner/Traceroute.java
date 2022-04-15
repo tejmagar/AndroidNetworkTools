@@ -100,6 +100,7 @@ public class Traceroute {
 
                     if (result != null) {
                         if (result.equals(UNKNOWN_HOST_PREFIX)) {
+                            isRunning = false;
                             handler.post(onTracerouteListener::onFailed);
                             return;
                         }

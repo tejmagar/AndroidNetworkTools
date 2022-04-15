@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         scan();
 
         Traceroute.init(this);
-        Traceroute.start("goog", new OnTracerouteListener() {
+        Traceroute.start("google.com", new OnTracerouteListener() {
             @Override
             public void onRouteAdd(Route route) {
                 Log.d(TAG, "traceroute: IP Address =>" + route.ipAddress + "=>"
