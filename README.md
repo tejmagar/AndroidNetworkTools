@@ -26,7 +26,7 @@ implementation 'com.github.tejmagar:AndroidNetworkTools:1.0.2alpha'
 
 ## Sample code
 
-```
+```java
 NetworkScanner.init(this);
 
 NetworkScanner.scan(new OnNetworkScanListener() {
@@ -50,14 +50,14 @@ NetworkScanner.scan(new OnNetworkScanListener() {
 as shown below.
 Note: MAC Address is required to lookup vendor name.</p>
 
-```
+```java
 NetworkScanner.setShowMacAddress(false);
 NetworkScanner.setShowVendorInfo(false);
 ```
 
 ## Traceroute
 
-```
+```java
  Traceroute.init(this);
  Traceroute.start("google.com", new OnTracerouteListener() {
     @Override
