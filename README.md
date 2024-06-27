@@ -6,7 +6,7 @@
 
 ## Update settings.gradle(Project Settings)
 
-```
+```gradle
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
